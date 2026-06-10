@@ -1,0 +1,1 @@
+{"scripts":{"test":"cucumber-js","test:chromium":"cucumber-js --world-parameters '{\"browserName\":\"chromium\"}'","test:headed":"HEADLESS=false cucumber-js","test:report":"node scripts/build-html-report.js","lint":"npx playwright --version"},"devDependencies":{"@cucumber/cucumber":"^10.9.0","@playwright/test":"^1.45.3","dotenv":"^16.4.5"}}
