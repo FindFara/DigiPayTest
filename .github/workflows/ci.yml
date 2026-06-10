@@ -1,0 +1,45 @@
+name: e2e-tests
+
+on:
+  pull_request:
+  push:
+    branches: [main, master, work]
+
+jobs:
+  chromium-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run BDD E2E tests on Chromium
+        run: npm run test:chromium
+        env:
+          BASE_URL: ${{ vars.BASE_URL || 'https://app.mydigipay.com' }}
+          HEADLESS: 'true'
+          TEST_MOBILE_NUMBER: ${{ secrets.TEST_MOBILE_NUMBER || '09123456789' }}
+          TEST_INVALID_MOBILE: '0912'
+          RECHARGE_TARGET_MOBILE: ${{ secrets.RECHARGE_TARGET_MOBILE || '09123456789' }}
+          RECHARGE_AMOUNT: '20000'
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-reports
+          path: |
+            reports/
+            test-results/
