@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+
+# Test output
+reports/*
+!reports/.gitkeep
+screenshots/*
+!screenshots/.gitkeep
+allure-results/
+htmlcov/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
